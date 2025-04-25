@@ -1,0 +1,424 @@
+POST  http://localhost:8080/auth/signup
+-----------------------------------------
+
+
+
+    Request Body:
+    ---------------
+
+        {
+            "name": "Yousseff",
+            "email": "yousseffconnecting@gmail.com",
+            "role": "student",
+            "password": "Supersecretpassword1337!",
+            "confirmationPassword": "Supersecretpassword1337!"
+        }
+
+
+    Response Body;
+    -----------------
+
+      {
+          "message": "Signup successful. Please verify your email.",
+          "isEmailVerified": false
+      }
+
+
+
+
+
+
+
+
+
+GET  http://localhost:8080/auth/verify-email/{VERIFICATION_TOKEN} 
+--------------------------------------------------------------------
+
+    
+    Response Body;
+    -----------------
+
+      {
+          "message": "Email successfully verified",
+          "isEmailVerified": false
+      }
+
+
+
+
+
+
+
+
+
+POST  http://localhost:8080/auth/login
+--------------------------------------------
+
+
+
+    Request Body:
+    ---------------
+
+      {
+          "email": "yousseffconnecting@gmail.com",
+          "password": "Supersecretpassword1337!"
+      }
+
+
+    Response Body;
+    -----------------
+
+      {
+          "message": "Login successful",
+          "success": true,
+          "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5MmFiMjQzYjQ4NjY4NjQ2MzA1N2YiLCJuYW1lIjoiWW91c3NlZmYiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoic3R1ZGVudCIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NDMxOTk4LCJleHAiOjE3NDU1MTgzOTh9.fL4FKovJ1r6_YiEDZrX-kwDzxz-XakK9XUYNWD-jzzE",
+          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5MmFiMjQzYjQ4NjY4NjQ2MzA1N2YiLCJpYXQiOjE3NDU0MzE5OTgsImV4cCI6MTc0NjAzNjc5OH0._OllWTqVAc9hiis4FehSFEzgvpHfAP4xQMewQ_StBGk",
+          "isEmailVerified": true
+      }
+
+
+
+
+
+
+
+
+
+
+POST   http://localhost:8080/auth/reset
+-------------------------------------------
+
+
+
+    Request Body:
+    ---------------
+
+      {
+          "email": "yousseffconnecting@gmail.com"
+      }
+
+
+    Response Body;
+    -----------------
+
+      {
+          "message": "Password reset email sent.",
+          "success": true
+      }
+
+
+
+
+
+
+
+
+
+GET  http://localhost:8080/auth/reset/{RESET_TOKEN}
+----------------------------------------------------------
+
+    // ** The reset password token will expire in 1 hour, so the frontEnd should redirect to the reset password page if the below value "success" is = true ** //
+
+
+    
+    Response Body;
+    -----------------
+
+      {
+          "message": "Token is valid, and forwarding you to the reset password page.",
+          "userId": "68092ab243b486686463057f",
+          "token": "5021a2f2363cf8abba4ecbb827361957a3c4774f359c62514660f62cc9df8fac",
+          "success": true
+      }
+
+
+
+
+
+POST   http://localhost:8080/auth/new-password
+-------------------------------------------------
+
+
+    Request Body:
+    ---------------
+
+
+      {
+        "token": "5021a2f2363cf8abba4ecbb827361957a3c4774f359c62514660f62cc9df8fac",
+        "newPassword": "Supersecret1111111password1337!",
+        "confirmationNewPassword": "Supersecret1111111password1337!"
+      }
+
+
+
+    Response Body;
+    -----------------
+
+      {
+          "message": "Password updated successfully",
+          "success": true
+      }
+
+
+
+
+
+
+
+
+POST   http://localhost:8080/auth/refresh-token
+-------------------------------------------------
+
+
+    Request Body:
+    ---------------
+
+
+      {
+          "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5MmFiMjQzYjQ4NjY4NjQ2MzA1N2YiLCJpYXQiOjE3NDU0MzIwMzksImV4cCI6MTc0NjAzNjgzOX0._1ddv2syjqtZVrHY5qrBo2708Eh_2bDQh_-qtxrMi4k"
+      }
+
+
+
+    Response Body;
+    -----------------
+
+      {
+          "message": "New access token issued",
+          "success": true,
+          "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5MmFiMjQzYjQ4NjY4NjQ2MzA1N2YiLCJuYW1lIjoiWW91c3NlZmYiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoic3R1ZGVudCIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NDMyMDQ4LCJleHAiOjE3NDU1MTg0NDh9.qBD_LXAnGmPGwYtnVsHY1ukXeX_A5_EKwSGfdaIihJ0"
+      }
+
+
+
+
+
+
+GET   http://localhost:8080/auth/get-username
+-------------------------------------------------
+
+    // this endpoint is for using it on the above right corner to display the current logged in user
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5ZTM4OWFkOGVjMjRjZmM1ZDA2MjYiLCJuYW1lIjoiWW91c3NlZmYiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoiUHJvZiIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NDg0NDgxLCJleHAiOjE3NDU1NzA4ODF9.YifvJqycw-YjJbWjT57WRq8ZzyeXmKHjO0wobeCaTOQ
+
+
+    Response Body:
+    ----------------
+
+      {
+          "name": "Yousseff",
+          "success": true
+      }
+
+
+
+
+
+GET   http://localhost:8080/auth/logout
+-------------------------------------------------
+
+    // this endpoint is for invalidating the JWT Token if the user clicked the logout button.
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODA5ZTM4OWFkOGVjMjRjZmM1ZDA2MjYiLCJuYW1lIjoiWW91c3NlZmYiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoiUHJvZiIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NDg1NTk4LCJleHAiOjE3NDU1NzE5OTh9.WFVCi191ML9EHCcd0ENujxn5WWKw-6SZc4TLa8Lg4fI
+
+
+    Response Body:
+    ----------------
+
+      {
+          "message": "Token has been invalidated because you logged out. Please login again.",
+      }
+
+
+
+
+
+
+
+GET  http://localhost:8080/student/available-courses
+---------------------------------------------------------
+
+
+    // this endpoint is for students to fetch the available courses from the database.
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhODIzNDU1YTE5NTU5NDkzZWY4MTQiLCJuYW1lIjoiWW91c3NlZmYgTW9oYW1tZWQiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoic3R1ZGVudCIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NTE5MjExLCJleHAiOjE3NDU1MjI4MTF9.agHGaBtqB8Js00LHJinBnMkP6p1J0zOdYupWrPhaWJ4
+
+
+    Response Body:
+    ----------------
+
+
+      [
+          {
+              "_id": "680a3dd4bf2869eecfe74d7e",
+              "name": "Algorithms",
+              "code": "CS104",
+              "professor": "680a3dd3bf2869eecfe74d4c",
+              "TA": "680a3dd4bf2869eecfe74d60",
+              "students": [],
+              "createdAt": "2025-04-24T13:34:12.431Z",
+              "updatedAt": "2025-04-24T13:34:12.431Z",
+              "__v": 0
+          },
+          {
+              "_id": "680a3dd4bf2869eecfe74d82",
+              "name": "Web Development",
+              "code": "CS105",
+              "professor": "680a3dd3bf2869eecfe74d4e",
+              "TA": "680a3dd4bf2869eecfe74d62",
+              "students": [],
+              "createdAt": "2025-04-24T13:34:12.433Z",
+              "updatedAt": "2025-04-24T13:34:12.433Z",
+              "__v": 0
+          },
+          {
+              "_id": "680a3dd4bf2869eecfe74d86",
+              "name": "Operating Systems",
+              "code": "CS106",
+              "professor": "680a3dd3bf2869eecfe74d4e",
+              "TA": "680a3dd4bf2869eecfe74d62",
+              "students": [],
+              "createdAt": "2025-04-24T13:34:12.436Z",
+              "updatedAt": "2025-04-24T13:34:12.436Z",
+              "__v": 0
+          },
+                          ...
+                          ...
+                          ...
+                          ...
+                          ...
+                          ...
+      ]
+
+
+
+
+
+
+POST   http://localhost:8080/student/register-courses
+----------------------------------------------------------
+
+
+
+
+    // this endpoint is for students to register courses.
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhODIzNDU1YTE5NTU5NDkzZWY4MTQiLCJuYW1lIjoiWW91c3NlZmYgTW9oYW1tZWQiLCJlbWFpbCI6InlvdXNzZWZmY29ubmVjdGluZ0BnbWFpbC5jb20iLCJyb2xlIjoic3R1ZGVudCIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NTE5MjExLCJleHAiOjE3NDU1MjI4MTF9.agHGaBtqB8Js00LHJinBnMkP6p1J0zOdYupWrPhaWJ4
+
+
+    Request Body:
+    ----------------
+
+
+      {
+        "courseIds": [
+          "680a3dd4bf2869eecfe74d72",
+          "680a3dd4bf2869eecfe74d76",
+          "680a3dd4bf2869eecfe74d7a"
+          ]
+      }
+
+
+
+    Response Body:
+    ----------------
+
+      {
+          "message": "Courses registered successfully.",
+          "courses": [
+              "680a3dd4bf2869eecfe74d72",
+              "680a3dd4bf2869eecfe74d76",
+              "680a3dd4bf2869eecfe74d7a"
+          ]
+      }
+
+
+
+
+
+
+
+
+GET   http://localhost:8080/prof-or-ta/registered-students
+---------------------------------------------------------------
+
+
+    // this endpoint is for Professors and TAs to get the students that are assigned to the courses that they're teaching.
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhM2RkM2JmMjg2OWVlY2ZlNzRkNGEiLCJuYW1lIjoiRHIuIEpvaG4gU21pdGgiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJyb2xlIjoiUHJvZiIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NTIzMzAzLCJleHAiOjE3NDU1MjY5MDN9.xkTfmklPAD61KshJGtov5KOArCirK6KP3zlB0vlFGrM
+
+
+    Response Body:
+    ----------------
+
+
+      {
+          "students": [
+              {
+                  "name": "Yousseff Mohammed",
+                  "courses": [
+                      "680a3dd4bf2869eecfe74d72",
+                      "680a3dd4bf2869eecfe74d76"
+                  ]
+              }
+          ]
+      }
+
+
+
+
+
+
+
+
+GET   http://localhost:8080/courses/{Course_ID} 
+---------------------------------------------------
+
+
+    // this endpoint is for any user logged in with a valid JWT Token to get the course details of any course with it's ID.
+
+    Request Header:
+    -----------------
+
+      Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODBhM2RkM2JmMjg2OWVlY2ZlNzRkNGEiLCJuYW1lIjoiRHIuIEpvaG4gU21pdGgiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJyb2xlIjoiUHJvZiIsImlzRW1haWxWZXJpZmllZCI6dHJ1ZSwiaWF0IjoxNzQ1NTIzMzAzLCJleHAiOjE3NDU1MjY5MDN9.xkTfmklPAD61KshJGtov5KOArCirK6KP3zlB0vlFGrM
+
+
+    Response Body:
+    ----------------
+
+      {
+          "_id": "680a3dd4bf2869eecfe74d72",
+          "name": "Computer Science I",
+          "code": "CS101",
+          "professor": "680a3dd3bf2869eecfe74d4a",
+          "TA": "680a3dd4bf2869eecfe74d5e",
+          "students": [],
+          "createdAt": "2025-04-24T13:34:12.420Z",
+          "updatedAt": "2025-04-24T13:34:12.420Z",
+          "__v": 0
+      }
+
+
+
+
+
+
+
+
+
+
